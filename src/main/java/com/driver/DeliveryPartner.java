@@ -5,6 +5,10 @@ public class DeliveryPartner {
     private String id;
     private int numberOfOrders;
 
+    public DeliveryPartner(){
+
+    }
+
     public DeliveryPartner(String id) {
         this.id = id;
         this.numberOfOrders = 0;
@@ -16,14 +20,6 @@ public class DeliveryPartner {
 
     public Integer getNumberOfOrders(){
         return numberOfOrders;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public void setNumberOfOrders(int numberOfOrders) {
-        this.numberOfOrders = numberOfOrders;
     }
 
     public void setNumberOfOrders(Integer numberOfOrders) {
