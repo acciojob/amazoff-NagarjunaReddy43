@@ -31,20 +31,21 @@ public class OrderRepository {
     public void addOrderPartnerPair(String orderId,String partnerId){
         if(ordersMap.containsKey(orderId) && partnerMap.containsKey(partnerId)){
             orderPartnerMap.put(orderId,partnerId);
+            List<String> currentOrders = new ArrayList<>();
+
+            if(partnerOrdersMap.containsKey(partnerId)){
+                currentOrders = partnerOrdersMap.get(partnerId);
+            }
+
+            currentOrders.add(orderId);
+            partnerOrdersMap.put(partnerId,currentOrders);
+
+            DeliveryPartner deliveryPartner = partnerMap.get(partnerId);
+
+            deliveryPartner.setNumberOfOrders(deliveryPartner.getNumberOfOrders()+1);
         }
 
-        List<String> currentOrders = new ArrayList<>();
 
-        if(partnerOrdersMap.containsKey(partnerId)){
-            currentOrders = partnerOrdersMap.get(partnerId);
-        }
-
-        currentOrders.add(orderId);
-        partnerOrdersMap.put(partnerId,currentOrders);
-
-        DeliveryPartner deliveryPartner = partnerMap.get(partnerId);
-
-        deliveryPartner.setNumberOfOrders(deliveryPartner.getNumberOfOrders()+1);
     }
     public  Order getOrderById(String orderId) {
         return ordersMap.get(orderId);
@@ -94,8 +95,6 @@ public class OrderRepository {
     }
 
     public int getLastDeliveryTimeByPartnerId(String partnerId){
-        String ans = "";
-
         int maxTime = 0;
         List<String> orders = partnerOrdersMap.get(partnerId);
         for(String orderId: orders){
